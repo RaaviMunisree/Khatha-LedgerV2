@@ -310,58 +310,6 @@ Run the frontend and backend in separate terminal windows. If browser requests f
 
 Vite exposes variables prefixed with `VITE_` to browser code. Never put database credentials, private API keys, payment secrets, or JWT signing secrets in frontend environment variables.
 
-## Authentication
-
-The current frontend implementation uses JWT authentication and stores the token and a frontend user representation in browser `localStorage` under `khatax_token` and `khatax_user`. The shared Axios client attaches the token as a Bearer token to API requests.
-
-This is the currently selected project implementation, not a claim that localStorage is the safest option for every production application. A production security review should consider XSS risk, token lifetime, refresh/revocation behavior, HTTPS, and the backend's authorization checks.
-
-## Development status
-
-### Backend modules implemented
-
-- Authentication
-- Shop management
-- Customer management
-- Product management
-- Inventory transactions
-- Customer ledger
-- Invoices / billing
-- Manual payments and Razorpay order/verification flow
-- Sales, payment, and inventory reports
-- Role-aware AI endpoint
-
-### Frontend work in progress
-
-- Vite + React + TypeScript foundation
-- Tailwind CSS and shared dependency setup
-- Feature-based directory structure
-- Authentication forms, auth state, Axios client, and protected routes
-- Remaining shop, owner dashboard, customer, product, inventory, ledger, invoice, payment, report, and AI screens
-- Full cross-module UI integration, responsive review, and end-to-end testing
-
-A module being available in the backend does not mean its frontend screen or its complete end-to-end user journey is finished. Verify each workflow through the UI and API before marking it complete.
-
-## Security and data integrity
-
-- Never commit `.env` files or actual credentials.
-- Keep all financial calculations and authorization decisions in the backend.
-- Do not trust client-provided shop ownership, user roles, outstanding balances, or payment-success states.
-- Verify online payments on the backend; frontend callbacks alone are not proof of payment.
-- Use the authenticated user's authorized shop ID for shop-scoped calls.
-- Keep AI data retrieval behind authorized backend tools/services.
-- Test error, duplicate-request, invalid-input, and cross-shop access scenarios before deployment.
-
-## Troubleshooting
-
-### Frontend shows `Network Error`
-
-1. Confirm the backend starts and listens on port `5000`.
-2. Confirm `client/.env` contains `VITE_API_BASE_URL=http://localhost:5000/api`.
-3. Restart Vite after changing `.env`.
-4. Check DevTools → Network for the request URL, status, and failed request details.
-5. Check DevTools → Console for CORS errors.
-6. Confirm Express CORS allows `http://localhost:5173` during local development.
 
 ## Project vision
 
